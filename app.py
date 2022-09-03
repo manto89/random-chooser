@@ -11,13 +11,19 @@ def read_file():
 		ret.append(line.replace("\n", ""))
 	return ret
 
+def get_block(inner_text):
+  return "<h1>" + inner_text + "</h1>"
+
+def get_span(inner_text):
+  return inner_text + " "
+
 @app.route("/")
 def index():
 	choices = read_file()
-	ret = []
+	ret = ""
 	for a in range(10):
 		random.shuffle(choices)
-		ret.append(choices[-1] + " | " + choices[-2] + " | " + choices[-3])
+		ret += get_block(get_span(choices[-1]) + get_span(choices[-2]) + get_span(choices[-3]))
 	return ret
 
 if __name__ == "__main__":
