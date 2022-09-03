@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  random-chooser:
+    image: random-chooser:latest
+    restart: unless-stopped
+    networks:
+      - web
+    volumes:
+      - /var/docker/random-chooser/input.txt:/app/input.txt:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.random-chooser.rule=Host(`subdomain.domain.tld`)"
+      - "traefik.http.routers.random-chooser.entrypoints=websecure"
+      - "traefik.http.routers.random-chooser.tls=true"
+networks:
+  web:
+    external: true
